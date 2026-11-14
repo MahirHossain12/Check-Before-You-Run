@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check Before You Run</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#16243d;background:#f3f6fb;line-height:1.55;--accent:#1746ae}
+body{margin:0} main{max-width:700px;margin:0 auto;padding:clamp(24px,6vw,72px) 20px}
+header{margin-bottom:24px} header span{font-size:.9rem;font-weight:650;color:var(--accent)}
+h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.1;margin:.3rem 0}
+h2{line-height:1.2;margin-top:0} p{margin:0 0 15px}
+section{background:white;border:1px solid #d8e0ef;border-radius:18px;padding:clamp(18px,5vw,32px)}
+pre{background:#13233e;color:#f4f8ff;padding:14px;border-radius:8px;overflow:auto}
+output{display:block;padding:10px 14px;background:#ecf2ff;border-radius:8px;margin:14px 0}
+label{display:block;font-weight:600;margin-top:13px} input,select,button{font:inherit;padding:8px 12px;border-radius:8px}
+input,select{border:1px solid #8392ad;background:white;max-width:100%}
+button{background:var(--accent);color:white;border:0;font-weight:650;cursor:pointer;margin-top:18px}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #b95900;outline-offset:3px}
+small{display:block;color:#475670}
+</style>
+</head>
+<body>
+<main>
+<header><span id="progress" aria-live="polite"></span><h1>Check Before You Run</h1></header>
+<section id="screen"></section>
+</main>
+<script id="session-config" type="application/json">__SESSION_CONFIG__</script>
+<script>
+const config = JSON.parse(document.querySelector("#session-config").textContent);
+const screen = document.querySelector("#screen");
+const progress = document.querySelector("#progress");
+const record = {version: config.version, participant: config.participant, sequence: config.sequence, mode: config.mode, rounds: []};
+
+function show(label, title, body) {
+  progress.textContent = label;
+  screen.innerHTML = "<h2 tabindex='-1'></h2>" + body;
+  const heading = screen.querySelector("h2");
+  heading.textContent = title;
+  heading.focus();
+}
+
+function submit(action) {
+  screen.querySelector("form").addEventListener("submit", event => {
+    event.preventDefault();
+    action(new FormData(event.currentTarget));
+  });
+}
+
+function taskBlock(task) {
+  return "<p>" + task.spec + " Inputs are whole numbers from 0 to 20.</p><pre><code>" +
+    task.code.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;") + "</code></pre>";
+}
+
+function numberField(name, label) {
+  return '<label for="' + name + '">' + label + '</label><input required type="number" id="' +
+    name + '" name="' + name + '" min="0" max="20" step="1" inputmode="numeric">';
+}
+
+function practice(index) {
+  const round = config.rounds[index];
+  const response = {id: round.id, condition: round.condition, practice_prediction: null};
+  const options = round.practice.choices.map(value => '<option>' + value + '</option>').join("");
+  const prediction = round.condition === "B" ? numberField("prediction", "What should this input return according to the specification?") : "";
+  show("Round " + (index + 1) + " of 4 · Practice", round.practice.name,
+    taskBlock(round.practice) + '<form><label for="practice-input">Choose one input to test</label>' +
+    '<select id="practice-input" name="input" required><option value="">Choose an input</option>' +
+    options + '</select>' + prediction + '<div><button>Run test</button></div></form>');
+  submit(data => {
+    response.practice_input = Number(data.get("input"));
+    if (round.condition === "B") response.practice_prediction = Number(data.get("prediction"));
+    observe(index, response);
+  });
+}
+
+function observe(index, response) {
+  const task = config.rounds[index].practice;
+  const prediction = response.practice_prediction === null ? "" :
+    "<p>Your predicted expected output was <strong>" + response.practice_prediction + "</strong>.</p>";
+  show("Round " + (index + 1) + " of 4 · Practice result", task.name,
+    taskBlock(task) + "<output>For input <strong>" + response.practice_input +
+    "</strong>, the candidate returned <strong>" + task.actual[response.practice_input] +
+    "</strong>.</output>" + prediction +
+    '<form><label for="verdict">Did this output match the specification for this input?</label>' +
+    '<select id="verdict" name="verdict" required><option value="">Choose an answer</option>' +
+    '<option value="matches">Matches</option><option value="differs">Differs</option>' +
+    '<option value="unsure">Unsure</option></select><div><button>Continue</button></div></form>');
+  submit(data => {
+    response.practice_verdict = data.get("verdict");
+    transfer(index, response);
+  });
+}
+
+function transfer(index, response) {
+  const task = config.rounds[index].transfer;
+  show("Round " + (index + 1) + " of 4 · Independent task", task.name,
+    taskBlock(task) + "<p>Find an input that would expose a mismatch. Enter what the function should return for that input.</p><form>" +
+    numberField("transfer_input", "Your test input") + numberField("transfer_expected", "Expected output under the specification") +
+    '<div><button>Submit test</button></div></form>');
+  submit(data => {
+    response.transfer_input = Number(data.get("transfer_input"));
+    response.transfer_expected = Number(data.get("transfer_expected"));
+    record.rounds.push(response);
+    if (index + 1 < config.rounds.length) practice(index + 1);
+    else finish();
+  });
+}
+
+function finish() {
+  show("Session complete", "Download your responses",
+    "<p>Every candidate contained a deliberately selected error. A test that passes on one input only checks that input. " +
+    "Try inputs at the limit itself when checking inclusive bounds. For caps and minimum allocations, try inputs above the cap or below the minimum.</p>" +
+    '<p>Download the JSON and return it to the session facilitator if requested.</p><button id="download">Download responses</button>');
+  document.querySelector("#download").addEventListener("click", () => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], {type:"application/json"}));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "check-before-you-run-" + config.participant + ".json";
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+}
+
+show(config.mode === "walkthrough" ? "Reviewer walkthrough" : "Study session", "Can you find a test that exposes an error?",
+  "<p>You'll work through four short Python tasks. Each round has a practice exercise and a new problem. " +
+  "Read the specification, inspect the proposed code, and choose an input to test.</p>" +
+  "<p>The independent tasks ask you to choose a test input and its expected output without a runner. " +
+  "Use only the materials shown in this session.</p><small>About 15–20 minutes. The browser keeps your responses until you download them.</small>" +
+  '<button id="start">Start session</button>');
+document.querySelector("#start").addEventListener("click", () => practice(0));
+</script>
+</body>
+</html>

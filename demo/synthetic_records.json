@@ -1,0 +1,354 @@
+[
+  {
+    "version": "1.0",
+    "participant": "synthetic-01",
+    "sequence": 0,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "minimum",
+        "condition": "A",
+        "practice_input": 0,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 0,
+        "transfer_expected": 1
+      },
+      {
+        "id": "maximum",
+        "condition": "B",
+        "practice_input": 5,
+        "practice_prediction": 1,
+        "practice_verdict": "differs",
+        "transfer_input": 9,
+        "transfer_expected": 1
+      },
+      {
+        "id": "cap",
+        "condition": "B",
+        "practice_input": 4,
+        "practice_prediction": 4,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 6
+      },
+      {
+        "id": "floor",
+        "condition": "A",
+        "practice_input": 8,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 4,
+        "transfer_expected": 4
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-02",
+    "sequence": 1,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "maximum",
+        "condition": "A",
+        "practice_input": 5,
+        "practice_prediction": null,
+        "practice_verdict": "differs",
+        "transfer_input": 9,
+        "transfer_expected": 1
+      },
+      {
+        "id": "cap",
+        "condition": "B",
+        "practice_input": 4,
+        "practice_prediction": 4,
+        "practice_verdict": "matches",
+        "transfer_input": 1,
+        "transfer_expected": 1
+      },
+      {
+        "id": "floor",
+        "condition": "B",
+        "practice_input": 8,
+        "practice_prediction": 8,
+        "practice_verdict": "matches",
+        "transfer_input": 1,
+        "transfer_expected": 4
+      },
+      {
+        "id": "minimum",
+        "condition": "A",
+        "practice_input": 0,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 1
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-03",
+    "sequence": 2,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "cap",
+        "condition": "A",
+        "practice_input": 4,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 9,
+        "transfer_expected": 6
+      },
+      {
+        "id": "floor",
+        "condition": "B",
+        "practice_input": 8,
+        "practice_prediction": 8,
+        "practice_verdict": "matches",
+        "transfer_input": 2,
+        "transfer_expected": 4
+      },
+      {
+        "id": "minimum",
+        "condition": "B",
+        "practice_input": 0,
+        "practice_prediction": 0,
+        "practice_verdict": "matches",
+        "transfer_input": 2,
+        "transfer_expected": 0
+      },
+      {
+        "id": "maximum",
+        "condition": "A",
+        "practice_input": 5,
+        "practice_prediction": null,
+        "practice_verdict": "differs",
+        "transfer_input": 9,
+        "transfer_expected": 2
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-04",
+    "sequence": 3,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "floor",
+        "condition": "A",
+        "practice_input": 8,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 7
+      },
+      {
+        "id": "minimum",
+        "condition": "B",
+        "practice_input": 0,
+        "practice_prediction": 0,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 1
+      },
+      {
+        "id": "maximum",
+        "condition": "B",
+        "practice_input": 5,
+        "practice_prediction": 1,
+        "practice_verdict": "differs",
+        "transfer_input": 9,
+        "transfer_expected": 2
+      },
+      {
+        "id": "cap",
+        "condition": "A",
+        "practice_input": 4,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 3,
+        "transfer_expected": 3
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-05",
+    "sequence": 4,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "minimum",
+        "condition": "B",
+        "practice_input": 0,
+        "practice_prediction": 0,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 1
+      },
+      {
+        "id": "maximum",
+        "condition": "A",
+        "practice_input": 5,
+        "practice_prediction": null,
+        "practice_verdict": "differs",
+        "transfer_input": 4,
+        "transfer_expected": 2
+      },
+      {
+        "id": "cap",
+        "condition": "A",
+        "practice_input": 4,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 11,
+        "transfer_expected": 6
+      },
+      {
+        "id": "floor",
+        "condition": "B",
+        "practice_input": 8,
+        "practice_prediction": 8,
+        "practice_verdict": "matches",
+        "transfer_input": 0,
+        "transfer_expected": 4
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-06",
+    "sequence": 5,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "maximum",
+        "condition": "B",
+        "practice_input": 5,
+        "practice_prediction": 1,
+        "practice_verdict": "differs",
+        "transfer_input": 9,
+        "transfer_expected": 2
+      },
+      {
+        "id": "cap",
+        "condition": "A",
+        "practice_input": 4,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 12,
+        "transfer_expected": 6
+      },
+      {
+        "id": "floor",
+        "condition": "A",
+        "practice_input": 8,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 9,
+        "transfer_expected": 9
+      },
+      {
+        "id": "minimum",
+        "condition": "B",
+        "practice_input": 0,
+        "practice_prediction": 0,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 1
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-07",
+    "sequence": 6,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "cap",
+        "condition": "B",
+        "practice_input": 4,
+        "practice_prediction": 4,
+        "practice_verdict": "matches",
+        "transfer_input": 6,
+        "transfer_expected": 6
+      },
+      {
+        "id": "floor",
+        "condition": "A",
+        "practice_input": 8,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 2,
+        "transfer_expected": 4
+      },
+      {
+        "id": "minimum",
+        "condition": "A",
+        "practice_input": 0,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 7,
+        "transfer_expected": 1
+      },
+      {
+        "id": "maximum",
+        "condition": "B",
+        "practice_input": 5,
+        "practice_prediction": 1,
+        "practice_verdict": "differs",
+        "transfer_input": 6,
+        "transfer_expected": 1
+      }
+    ]
+  },
+  {
+    "version": "1.0",
+    "participant": "synthetic-08",
+    "sequence": 7,
+    "mode": "synthetic",
+    "rounds": [
+      {
+        "id": "floor",
+        "condition": "B",
+        "practice_input": 8,
+        "practice_prediction": 8,
+        "practice_verdict": "matches",
+        "transfer_input": 3,
+        "transfer_expected": 4
+      },
+      {
+        "id": "minimum",
+        "condition": "A",
+        "practice_input": 0,
+        "practice_prediction": null,
+        "practice_verdict": "matches",
+        "transfer_input": 8,
+        "transfer_expected": 1
+      },
+      {
+        "id": "maximum",
+        "condition": "A",
+        "practice_input": 5,
+        "practice_prediction": null,
+        "practice_verdict": "differs",
+        "transfer_input": 9,
+        "transfer_expected": 1
+      },
+      {
+        "id": "cap",
+        "condition": "B",
+        "practice_input": 4,
+        "practice_prediction": 4,
+        "practice_verdict": "matches",
+        "transfer_input": 14,
+        "transfer_expected": 7
+      }
+    ]
+  }
+]
